@@ -1,0 +1,127 @@
+// Repositoria Fase 3 — parallel mail index service
+// Accounts are linked to Repositoria users via external usuarioId (cuid).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum MailProvider {
+  IMAP
+  GMAIL
+}
+
+enum SyncStatus {
+  IDLE
+  SYNCING
+  ERROR
+}
+
+enum MailFolder {
+  INBOX
+  SENT
+}
+
+model MailAccount {
+  id                   String      @id @default(cuid())
+  /// External Repositoria user id (cuid string)
+  usuarioId            String
+  email                String
+  displayName          String?
+  provider             MailProvider @default(IMAP)
+
+  imapHost             String?
+  imapPort             Int?         @default(993)
+  imapSecure           Boolean      @default(true)
+  imapUser             String?
+  /// Encrypted or vault-ref; never log. Populated from env/API, not argv.
+  imapPasswordEnc      String?      @db.Text
+
+  /// Gmail OAuth tokens (refresh) — stubbed; client id/secret from env only
+  oauthRefreshTokenEnc String?      @db.Text
+  oauthAccessTokenEnc  String?      @db.Text
+  oauthTokenExpiresAt  DateTime?
+
+  syncStatus           SyncStatus   @default(IDLE)
+  syncError            String?      @db.Text
+  lastSyncedAt         DateTime?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  threads              Thread[]
+  messages             Message[]
+
+  @@unique([usuarioId, email])
+  @@index([usuarioId])
+}
+
+model Thread {
+  id              String    @id @default(cuid())
+  accountId       String
+  /// Stable key derived from root Message-ID / References chain
+  rootMessageId   String
+  subject         String    @db.Text
+  participants    Json
+  messageCount    Int       @default(0)
+  lastMessageAt   DateTime?
+  certificatePath String?
+  certificateGeneratedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  account         MailAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  messages        Message[]
+
+  @@unique([accountId, rootMessageId])
+  @@index([accountId, lastMessageAt])
+}
+
+model Message {
+  id           String     @id @default(cuid())
+  accountId    String
+  threadId     String
+  /// RFC 5322 Message-ID (normalized, angle brackets stripped)
+  messageId    String
+  inReplyTo    String?
+  /// JSON array of Message-ID strings from References header
+  references   Json?
+  folder       MailFolder
+  fromAddr     String     @db.Text
+  toAddrs      String     @db.Text
+  ccAddrs      String?    @db.Text
+  subject      String     @db.Text
+  bodyText     String?    @db.LongText
+  bodyHtml     String?    @db.LongText
+  date         DateTime
+  imapUid      Int?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  account      MailAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  thread       Thread      @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  attachments  Attachment[]
+
+  @@unique([accountId, messageId])
+  @@index([threadId, date])
+  @@index([accountId, folder])
+}
+
+model Attachment {
+  id          String   @id @default(cuid())
+  messageId   String
+  filename    String
+  mimeType    String
+  size        Int
+  contentId   String?
+  /// Local or object-storage path relative to ATTACHMENTS_DIR
+  storagePath String
+  createdAt   DateTime @default(now())
+
+  message     Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+}

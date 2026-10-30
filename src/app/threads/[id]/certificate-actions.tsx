@@ -40,7 +40,7 @@ export function CertificateActions({
         type="button"
         onClick={generate}
         disabled={busy}
-        className="btn-primary"
+        className="btn-primary on-light"
       >
         {busy ? "Generando…" : "Generar certificado PDF"}
       </button>

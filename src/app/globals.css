@@ -1,100 +1,206 @@
 @import "tailwindcss";
 
 /*
-  BlueMail reference → colors + fonts only (not layout/feature clone).
-  Source: docs/design/ui-reference-bluemail.png
-  Typography: Questrial (Questia in Repositoria) for product consistency.
+  Vibrant UI reference → colors, rounded cards, modern fonts only.
+  NOT a Copec/loyalty feature or layout clone.
+  Source: docs/design/ui-reference-vibrant.jpg
 */
 :root {
-  /* Brand blues (sampled from BlueMail mark / accents) */
-  --blue-50: #eef4ff;
-  --blue-100: #dbe7fe;
-  --blue-500: #387cf4;
-  --blue-600: #2068f0;
-  --blue-700: #1a56cc;
-  --blue-800: #144cb0;
+  /* Royal blue hero / primary (sampled ≈ #3138e0) */
+  --blue-50: #eef0ff;
+  --blue-100: #d9dcff;
+  --blue-200: #c6c8ed;
+  --blue-400: #6868f0;
+  --blue-500: #444cec;
+  --blue-600: #3138e0;
+  --blue-700: #2a30c4;
+  --blue-800: #2329a8;
+  --blue-hero-pattern: #3a42e8;
 
-  /* Neutrals / warm paper */
-  --bg-page: #fdfbf7;
+  /* Page + surfaces */
+  --bg-page: #f4f5fa;
   --bg-elevated: #ffffff;
-  --bg-muted: #f6f3ee;
-  --bg-nav: #edf1f5;
-  --border-subtle: #e7e6e4;
-  --border-strong: #d4d2ce;
+  --bg-muted: #eef0f6;
+  --border-subtle: #e2e5ef;
+  --border-strong: #cfd3e0;
 
   /* Text */
-  --text-main: #15130f;
-  --text-muted: #5c5a56;
-  --text-body: #6b6862;
+  --text-main: #12131a;
+  --text-muted: #5a5e72;
+  --text-body: #6b7085;
   --text-inverse: #ffffff;
 
-  /* Accents / feedback */
+  /* Accent tiles (category energy — not product branding) */
+  --accent-cyan: #00b8f8;
+  --accent-green: #22c55e;
+  --accent-orange: #f97316;
+  --accent-pink: #f43f5e;
+  --accent-violet: #8b5cf6;
+
   --accent: var(--blue-600);
   --accent-hover: var(--blue-700);
   --accent-soft: var(--blue-50);
-  --danger: #b42318;
+  --danger: #e11d48;
   --warning-bg: #fff7ed;
   --warning-border: #fed7aa;
   --warning-text: #9a3412;
 
-  /* Compat aliases used by layout */
   --background: var(--bg-page);
   --foreground: var(--text-main);
 
+  --font-display: var(--font-display-face), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-sans: var(--font-questrial), "Questrial", system-ui, sans-serif;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --shadow-soft: 0 8px 30px rgba(21, 19, 15, 0.06);
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-card: 0 10px 28px rgba(18, 19, 26, 0.06);
+  --shadow-soft: 0 6px 18px rgba(49, 56, 224, 0.12);
 }
 
 @theme inline {
   --color-bm-blue: var(--blue-600);
-  --color-bm-blue-hover: var(--blue-700);
-  --color-bm-blue-soft: var(--blue-50);
   --color-bm-page: var(--bg-page);
   --color-bm-elevated: var(--bg-elevated);
-  --color-bm-muted: var(--bg-muted);
-  --color-bm-border: var(--border-subtle);
-  --color-bm-text: var(--text-main);
-  --color-bm-muted-text: var(--text-muted);
-  --color-bm-body: var(--text-body);
-  --font-sans: var(--font-questrial), "Questrial", system-ui, sans-serif;
+  --font-sans: var(--font-sans);
 }
 
 body {
-  background:
-    radial-gradient(ellipse 120% 80% at 50% -10%, var(--blue-50) 0%, transparent 55%),
-    var(--bg-page);
+  background: var(--bg-page);
   color: var(--text-main);
   font-family: var(--font-sans);
 }
 
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.9em;
+  font-size: 0.88em;
   background: var(--bg-muted);
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+}
+
+/* —— Layout primitives —— */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--blue-600);
+  color: var(--text-inverse);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding: 2rem 1.5rem 2.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto auto;
+  width: 280px;
+  height: 280px;
+  border-radius: 40%;
+  background: var(--blue-hero-pattern);
+  opacity: 0.45;
+  transform: rotate(18deg);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -80px;
+  bottom: -100px;
+  width: 220px;
+  height: 220px;
+  border-radius: 45%;
+  background: var(--blue-500);
+  opacity: 0.35;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.card {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(226, 229, 239, 0.8);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 1rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-subtle);
+  min-height: 6.5rem;
+}
+
+.tile-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   border-radius: var(--radius-sm);
-  background: var(--accent);
-  color: var(--text-inverse);
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background 0.15s ease;
+  background: var(--text-inverse);
+  color: var(--blue-700);
+  padding: 0.7rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
 }
 
 .btn-primary:disabled {
-  opacity: 0.6;
+  opacity: 0.65;
+}
+
+.btn-primary.on-light {
+  background: var(--blue-600);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary.on-light:hover {
+  background: var(--blue-700);
 }
 
 .btn-secondary {
@@ -104,25 +210,63 @@ code {
   border: 1px solid var(--border-strong);
   background: var(--bg-elevated);
   color: var(--text-main);
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1rem;
   font-size: 0.875rem;
-  transition: background 0.15s ease;
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 .btn-secondary:hover {
   background: var(--bg-muted);
 }
 
-.eyebrow {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+.link-accent {
+  color: var(--blue-600);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link-accent:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  font-family: var(--font-display);
+}
+
+.chip-inbox {
+  background: #e0f7ef;
+  color: #047857;
+}
+
+.chip-sent {
+  background: #e8ecff;
   color: var(--blue-700);
 }
 
-.link-accent {
-  color: var(--blue-700);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+.page-shell {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 2.75rem 2rem 3rem;
+    border-radius: var(--radius-lg);
+    margin: 1.25rem 1rem 0;
+  }
+
+  .page-shell {
+    padding: 0 1.5rem 3.5rem;
+  }
 }

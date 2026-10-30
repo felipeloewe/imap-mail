@@ -17,60 +17,79 @@ export default async function ThreadsPage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-4xl px-6 py-12">
-      <div className="mb-8 flex items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Repositoria · Correo</p>
-          <h1 className="mt-1 text-3xl tracking-tight text-[var(--text-main)]">
-            Hilos
-          </h1>
+    <div className="pb-10">
+      <header className="hero !pb-8">
+        <div className="flex items-center justify-between gap-3">
+          <p className="hero-eyebrow">Repositoria · Correo</p>
+          <Link href="/" className="text-sm font-semibold text-white/90 hover:text-white">
+            Inicio
+          </Link>
         </div>
-        <Link
-          href="/"
-          className="text-sm text-[var(--text-muted)] hover:text-[var(--blue-700)]"
-        >
-          Inicio
-        </Link>
-      </div>
+        <h1 className="mt-3 text-3xl text-white md:text-4xl">Hilos</h1>
+        <p className="mt-2 max-w-lg text-sm text-white/80 md:text-base">
+          Índice canónico reconstruido por Message-ID / In-Reply-To / References.
+        </p>
+      </header>
 
-      {error ? (
-        <p
-          className="rounded-[var(--radius-sm)] border px-4 py-3 text-sm"
-          style={{
-            borderColor: "var(--warning-border)",
-            background: "var(--warning-bg)",
-            color: "var(--warning-text)",
-          }}
-        >
-          {error}
-        </p>
-      ) : threads.length === 0 ? (
-        <p className="text-[var(--text-body)]">
-          Sin hilos aún. Vincula una casilla vía{" "}
-          <code>POST /api/accounts</code> y ejecuta sync, o usa{" "}
-          <code>npm run seed:demo</code>.
-        </p>
-      ) : (
-        <ul className="divide-y divide-[var(--border-subtle)] border-t border-[var(--border-subtle)]">
-          {threads.map((t) => (
-            <li key={t.id} className="py-4">
-              <Link
-                href={`/threads/${t.id}`}
-                className="block rounded-[var(--radius-sm)] px-2 py-1 hover:bg-[var(--bg-muted)]"
-              >
-                <div className="text-[var(--text-main)]">{t.subject}</div>
-                <div className="mt-1 text-sm text-[var(--text-body)]">
-                  {t.account.email} · {t.messageCount} mensajes
-                  {t.lastMessageAt
-                    ? ` · ${t.lastMessageAt.toISOString().slice(0, 10)}`
-                    : ""}
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+      <main className="page-shell mt-6">
+        {error ? (
+          <p
+            className="card px-4 py-3 text-sm"
+            style={{
+              borderColor: "var(--warning-border)",
+              background: "var(--warning-bg)",
+              color: "var(--warning-text)",
+            }}
+          >
+            {error}
+          </p>
+        ) : threads.length === 0 ? (
+          <div className="card p-6 text-[var(--text-body)]">
+            Sin hilos aún. Vincula una casilla vía{" "}
+            <code>POST /api/accounts</code> y ejecuta sync, o usa{" "}
+            <code>npm run seed:demo</code>.
+          </div>
+        ) : (
+          <ul className="space-y-3">
+            {threads.map((t, i) => {
+              const accents = [
+                "var(--accent-cyan)",
+                "var(--accent-orange)",
+                "var(--accent-green)",
+                "var(--accent-pink)",
+              ];
+              const accent = accents[i % accents.length];
+              return (
+                <li key={t.id}>
+                  <Link
+                    href={`/threads/${t.id}`}
+                    className="card flex items-stretch gap-4 p-4 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+                  >
+                    <span
+                      className="w-1.5 shrink-0 rounded-full"
+                      style={{ background: accent }}
+                      aria-hidden
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="display text-base text-[var(--text-main)] md:text-lg">
+                        {t.subject}
+                      </div>
+                      <div className="mt-1 text-sm text-[var(--text-body)]">
+                        {t.account.email} · {t.messageCount} mensajes
+                        {t.lastMessageAt
+                          ? ` · ${t.lastMessageAt.toISOString().slice(0, 10)}`
+                          : ""}
+                      </div>
+                    </div>
+                    <span className="self-center text-[var(--blue-600)]">›</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </main>
+    </div>
   );
 }
 

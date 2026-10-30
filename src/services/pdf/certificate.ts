@@ -97,18 +97,20 @@ function renderCertificatePdf(input: CertInput): Promise<Buffer> {
     doc.on("end", () => resolve(Buffer.concat(chunks)));
     doc.on("error", reject);
 
+    doc.rect(0, 0, 612, 72).fill("#3138e0");
     doc
+      .fillColor("#ffffff")
       .fontSize(18)
-      .text("Repositoria — Certificado de hilo de correo", { align: "left" });
-    doc.moveDown(0.5);
+      .text("Repositoria — Certificado de hilo", 50, 28, { align: "left" });
+    doc.moveDown(2.2);
     doc
       .fontSize(10)
-      .fillColor("#444444")
+      .fillColor("#5a5e72")
       .text(
         "Documento de archivo generado por el servicio de correo de Repositoria (Fase 3).",
       );
     doc.moveDown();
-    doc.fillColor("#000000").fontSize(12);
+    doc.fillColor("#12131a").fontSize(12);
     doc.text(`Asunto: ${input.subject}`);
     doc.text(`Thread ID: ${input.threadId}`);
     doc.text(`Root Message-ID: ${input.rootMessageId}`);

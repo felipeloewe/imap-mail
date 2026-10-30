@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Questrial } from "next/font/google";
 import "./globals.css";
 
-const sans = Source_Sans_3({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const serif = Source_Serif_4({
-  variable: "--font-serif",
+/** Questrial ≈ Questia reference used across Repositoria product UI. */
+const questrial = Questrial({
+  weight: "400",
+  variable: "--font-questrial",
   subsets: ["latin"],
 });
 
@@ -25,11 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        className={`${sans.variable} ${serif.variable} bg-[radial-gradient(ellipse_at_top,_#f0fdfa_0%,_#fafaf9_45%,_#f5f5f4_100%)] font-[family-name:var(--font-sans)] antialiased text-stone-900`}
-      >
-        {children}
-      </body>
+      <body className={`${questrial.variable} antialiased`}>{children}</body>
     </html>
   );
 }

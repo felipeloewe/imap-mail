@@ -1,17 +1,128 @@
 @import "tailwindcss";
 
+/*
+  BlueMail reference → colors + fonts only (not layout/feature clone).
+  Source: docs/design/ui-reference-bluemail.png
+  Typography: Questrial (Questia in Repositoria) for product consistency.
+*/
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --accent: #115e59;
+  /* Brand blues (sampled from BlueMail mark / accents) */
+  --blue-50: #eef4ff;
+  --blue-100: #dbe7fe;
+  --blue-500: #387cf4;
+  --blue-600: #2068f0;
+  --blue-700: #1a56cc;
+  --blue-800: #144cb0;
+
+  /* Neutrals / warm paper */
+  --bg-page: #fdfbf7;
+  --bg-elevated: #ffffff;
+  --bg-muted: #f6f3ee;
+  --bg-nav: #edf1f5;
+  --border-subtle: #e7e6e4;
+  --border-strong: #d4d2ce;
+
+  /* Text */
+  --text-main: #15130f;
+  --text-muted: #5c5a56;
+  --text-body: #6b6862;
+  --text-inverse: #ffffff;
+
+  /* Accents / feedback */
+  --accent: var(--blue-600);
+  --accent-hover: var(--blue-700);
+  --accent-soft: var(--blue-50);
+  --danger: #b42318;
+  --warning-bg: #fff7ed;
+  --warning-border: #fed7aa;
+  --warning-text: #9a3412;
+
+  /* Compat aliases used by layout */
+  --background: var(--bg-page);
+  --foreground: var(--text-main);
+
+  --font-sans: var(--font-questrial), "Questrial", system-ui, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --shadow-soft: 0 8px 30px rgba(21, 19, 15, 0.06);
+}
+
+@theme inline {
+  --color-bm-blue: var(--blue-600);
+  --color-bm-blue-hover: var(--blue-700);
+  --color-bm-blue-soft: var(--blue-50);
+  --color-bm-page: var(--bg-page);
+  --color-bm-elevated: var(--bg-elevated);
+  --color-bm-muted: var(--bg-muted);
+  --color-bm-border: var(--border-subtle);
+  --color-bm-text: var(--text-main);
+  --color-bm-muted-text: var(--text-muted);
+  --color-bm-body: var(--text-body);
+  --font-sans: var(--font-questrial), "Questrial", system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, var(--blue-50) 0%, transparent 55%),
+    var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--font-sans);
 }
 
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.9em;
+  background: var(--bg-muted);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--text-inverse);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  transition: background 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-muted);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-700);
+}
+
+.link-accent {
+  color: var(--blue-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

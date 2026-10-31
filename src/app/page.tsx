@@ -40,8 +40,9 @@ export default function HomePage() {
           Correo e índice histórico
         </h1>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
-          Sync IMAP, reconstrucción de hilos y certificado PDF hacia el
-          repositorio documental — parte del producto Repositoria.
+          Sync IMAP, hilos y certificado PDF. Consumido por Repositoria
+          CodeIgniter 4 vía <code className="rounded bg-white/15 px-1">IMAP_MAIL_BASE_URL</code>{" "}
+          → Documentos (adjuntos + PDF).
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/threads" className="btn-primary">
@@ -72,7 +73,7 @@ export default function HomePage() {
           <div className="flex items-end justify-between gap-3">
             <h2 className="text-xl text-[var(--text-main)]">Integración API</h2>
             <span className="text-sm font-semibold text-[var(--blue-600)]">
-              Para Repositoria
+              CI4 · ImapMailClient
             </span>
           </div>
           <ul className="space-y-2 text-[var(--text-muted)]">
@@ -103,8 +104,8 @@ export default function HomePage() {
             </li>
           </ul>
           <p className="text-sm text-[var(--text-body)]">
-            Ver README para el contrato. Este servicio no modifica el repo de
-            Repositoria.
+            Contrato estable para CI4 en el README. Este servicio Node no
+            modifica el repo PHP; Repositoria guarda en Documentos vía HTTP.
           </p>
         </section>
       </main>

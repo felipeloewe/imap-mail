@@ -16,6 +16,8 @@ export async function POST(req: Request, { params }: Params) {
     const body = (await req.json().catch(() => ({}))) as {
       pushToRepositoria?: boolean;
       suggestedDepartamentoId?: string;
+      /** CI4 Documentos sección */
+      suggestedSeccionId?: string;
     };
 
     const result = await generateThreadCertificate(id);
@@ -36,6 +38,7 @@ export async function POST(req: Request, { params }: Params) {
         accountId: thread.accountId,
         threadId: thread.id,
         suggestedDepartamentoId: body.suggestedDepartamentoId,
+        suggestedSeccionId: body.suggestedSeccionId,
         files: [
           {
             kind: "certificate_pdf",
@@ -47,6 +50,7 @@ export async function POST(req: Request, { params }: Params) {
         metadata: {
           subject: thread.subject,
           messageCount: thread.messageCount,
+          consumer: "repositoria-ci4",
         },
       });
     }

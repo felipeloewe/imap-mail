@@ -15,6 +15,8 @@ export async function GET(req: Request, { params }: Params) {
     const push = searchParams.get("pushToRepositoria") === "1";
     const suggestedDepartamentoId =
       searchParams.get("departamentoId") ?? undefined;
+    const suggestedSeccionId =
+      searchParams.get("seccionId") ?? undefined;
 
     const attachment = await prisma.attachment.findUnique({
       where: { id },
@@ -47,6 +49,7 @@ export async function GET(req: Request, { params }: Params) {
         threadId: attachment.message.threadId,
         attachmentId: attachment.id,
         suggestedDepartamentoId,
+        suggestedSeccionId,
         files: [
           {
             kind: "attachment",
@@ -58,6 +61,7 @@ export async function GET(req: Request, { params }: Params) {
         metadata: {
           subject: attachment.message.subject,
           messageId: attachment.message.messageId,
+          consumer: "repositoria-ci4",
         },
       });
     }

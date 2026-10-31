@@ -1,0 +1,43 @@
+{
+  "name": "imap-mail",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "eslint",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "seed:demo": "tsx scripts/seed-demo.ts",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^3.3.0",
+    "@prisma/client": "^6.19.3",
+    "dotenv": "^18.0.9",
+    "imapflow": "^2.10.0",
+    "mailparser": "^3.14.1",
+    "next": "15.5.28",
+    "pdfkit": "^0.20.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/mailparser": "^3.9.0",
+    "@types/node": "^20",
+    "@types/pdfkit": "^0.17.7",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.28",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  }
+}

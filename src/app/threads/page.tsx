@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { BrandHero } from "@/components/BrandHero";
 
 export const dynamic = "force-dynamic";
 
@@ -18,18 +19,17 @@ export default async function ThreadsPage() {
 
   return (
     <div className="pb-10">
-      <header className="hero !pb-8">
-        <div className="flex items-center justify-between gap-3">
-          <p className="hero-eyebrow">Repositoria · Correo</p>
+      <BrandHero
+        compact
+        eyebrow="Repositoria · Correo"
+        title="Hilos"
+        support="Índice canónico reconstruido por Message-ID / In-Reply-To / References."
+        topRight={
           <Link href="/" className="text-sm font-semibold text-white/90 hover:text-white">
             Inicio
           </Link>
-        </div>
-        <h1 className="mt-3 text-3xl text-white md:text-4xl">Hilos</h1>
-        <p className="mt-2 max-w-lg text-sm text-white/80 md:text-base">
-          Índice canónico reconstruido por Message-ID / In-Reply-To / References.
-        </p>
-      </header>
+        }
+      />
 
       <main className="page-shell mt-6">
         {error ? (
@@ -53,10 +53,10 @@ export default async function ThreadsPage() {
           <ul className="space-y-3">
             {threads.map((t, i) => {
               const accents = [
-                "var(--accent-cyan)",
-                "var(--accent-orange)",
-                "var(--accent-green)",
-                "var(--accent-pink)",
+                "var(--brand-navy)",
+                "var(--brand-blue)",
+                "var(--brand-steel)",
+                "var(--brand-teal)",
               ];
               const accent = accents[i % accents.length];
               return (
@@ -81,7 +81,7 @@ export default async function ThreadsPage() {
                           : ""}
                       </div>
                     </div>
-                    <span className="self-center text-[var(--blue-600)]">›</span>
+                    <span className="self-center text-[var(--brand-blue)]">›</span>
                   </Link>
                 </li>
               );

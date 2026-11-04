@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { BrandHero } from "@/components/BrandHero";
 import { CertificateActions } from "./certificate-actions";
 
 export const dynamic = "force-dynamic";
@@ -27,22 +28,25 @@ export default async function ThreadDetailPage({ params }: Props) {
 
   return (
     <div className="pb-10">
-      <header className="hero !pb-8">
-        <Link
-          href="/threads"
-          className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-sm font-semibold text-white hover:bg-white/25"
-        >
-          ← Hilos
-        </Link>
-        <p className="hero-eyebrow mt-4">Certificado PDF del hilo</p>
-        <h1 className="mt-2 text-3xl leading-tight text-white md:text-4xl">
-          {thread.subject}
-        </h1>
-        <p className="mt-2 text-sm text-white/80">
-          {thread.account.email} · usuarioId {thread.account.usuarioId} ·{" "}
-          {thread.messages.length} mensajes
-        </p>
-      </header>
+      <BrandHero
+        compact
+        eyebrow="Certificado PDF del hilo"
+        title={thread.subject}
+        support={
+          <>
+            {thread.account.email} · usuarioId {thread.account.usuarioId} ·{" "}
+            {thread.messages.length} mensajes
+          </>
+        }
+        topRight={
+          <Link
+            href="/threads"
+            className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-sm font-semibold text-white hover:bg-white/25"
+          >
+            ← Hilos
+          </Link>
+        }
+      />
 
       <main className="page-shell mt-6 space-y-4">
         <section className="card p-5">

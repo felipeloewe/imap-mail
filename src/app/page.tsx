@@ -1,32 +1,33 @@
 import Link from "next/link";
+import { BrandHero } from "@/components/BrandHero";
 
 const tiles = [
   {
     label: "Hilos",
     hint: "INBOX + Sent",
     href: "/threads",
-    color: "var(--accent-cyan)",
+    color: "var(--brand-navy)",
     mark: "Hi",
   },
   {
     label: "Certificado",
     hint: "PDF del hilo",
     href: "/threads",
-    color: "var(--accent-orange)",
+    color: "var(--brand-blue)",
     mark: "PDF",
   },
   {
     label: "Adjuntos",
     hint: "Export API",
     href: "/api/health",
-    color: "var(--accent-green)",
+    color: "var(--brand-steel)",
     mark: "Ad",
   },
   {
     label: "OAuth",
     hint: "Gmail stub",
     href: "/api/oauth/gmail/start?usuarioId=demo",
-    color: "var(--accent-pink)",
+    color: "var(--brand-teal)",
     mark: "Go",
   },
 ];
@@ -34,25 +35,28 @@ const tiles = [
 export default function HomePage() {
   return (
     <div className="pb-10">
-      <header className="hero">
-        <p className="hero-eyebrow">Repositoria · Fase 3</p>
-        <h1 className="mt-3 max-w-xl text-4xl leading-tight text-white md:text-5xl">
-          Correo e índice histórico
-        </h1>
-        <p className="mt-3 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
-          Sync IMAP, hilos y certificado PDF. Consumido por Repositoria
-          CodeIgniter 4 vía <code className="rounded bg-white/15 px-1">IMAP_MAIL_BASE_URL</code>{" "}
-          → Documentos (adjuntos + PDF).
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/threads" className="btn-primary">
-            Ver hilos
-          </Link>
-          <a href="/api/health" className="btn-secondary !border-white/30 !bg-white/10 !text-white">
-            Health API
-          </a>
-        </div>
-      </header>
+      <BrandHero
+        eyebrow="Repositoria · Fase 3"
+        title="Correo e índice histórico"
+        support={
+          <>
+            Sync IMAP, hilos y certificado PDF. Consumido por Repositoria
+            CodeIgniter 4 vía{" "}
+            <code className="rounded bg-white/15 px-1">IMAP_MAIL_BASE_URL</code>{" "}
+            → Documentos (adjuntos + PDF).
+          </>
+        }
+        actions={
+          <>
+            <Link href="/threads" className="btn-primary">
+              Ver hilos
+            </Link>
+            <a href="/api/health" className="btn-secondary on-hero">
+              Health API
+            </a>
+          </>
+        }
+      />
 
       <main className="page-shell mt-6 space-y-6">
         <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -72,7 +76,7 @@ export default function HomePage() {
         <section className="card space-y-4 p-5 md:p-6">
           <div className="flex items-end justify-between gap-3">
             <h2 className="text-xl text-[var(--text-main)]">Integración API</h2>
-            <span className="text-sm font-semibold text-[var(--blue-600)]">
+            <span className="text-sm font-semibold text-[var(--brand-blue)]">
               CI4 · ImapMailClient
             </span>
           </div>

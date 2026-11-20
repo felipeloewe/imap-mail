@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Repositoria · Correo</title>
+  <meta name="description" content="Servicio de correo e índice histórico de Repositoria (Fase 3)"/>
+  <link rel="icon" href="/brand/mark.svg" type="image/svg+xml"/>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <!-- Durable brand CSS (not hashed /_next/static) so Apache static / stays styled after Next rebuilds -->
+  <link rel="stylesheet" href="/brand/home.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="home-pad">
+    <header class="hero">
+      <div class="hero__top">
+        <a class="hero__brand" href="/" aria-label="Repositoria Correo">
+          <img class="hero__logo" src="/brand/logo-on-dark.svg" width="240" height="55" alt="Repositoria — Gestor documental"/>
+        </a>
+      </div>
+      <p class="hero-eyebrow">Repositoria · Fase 3</p>
+      <h1 class="hero__title">Correo e índice histórico</h1>
+      <div class="hero__support">
+        Sync IMAP, hilos y certificado PDF. Consumido por Repositoria CodeIgniter 4 vía
+        <code>IMAP_MAIL_BASE_URL</code>
+        → Documentos (adjuntos + PDF).
+      </div>
+      <div class="hero__actions">
+        <a class="btn-primary" href="/threads">Ver hilos</a>
+        <a class="btn-secondary on-hero" href="/api/health">Health API</a>
+      </div>
+    </header>
+    <main class="page-shell home-main home-stack">
+      <section class="home-tiles">
+        <a class="tile" href="/threads">
+          <span class="tile-icon" style="background:var(--brand-navy)">Hi</span>
+          <div>
+            <div class="display home-label">Hilos</div>
+            <div class="home-hint">INBOX + Sent</div>
+          </div>
+        </a>
+        <a class="tile" href="/threads">
+          <span class="tile-icon" style="background:var(--brand-blue)">PDF</span>
+          <div>
+            <div class="display home-label">Certificado</div>
+            <div class="home-hint">PDF del hilo</div>
+          </div>
+        </a>
+        <a class="tile" href="/api/health">
+          <span class="tile-icon" style="background:var(--brand-steel)">Ad</span>
+          <div>
+            <div class="display home-label">Adjuntos</div>
+            <div class="home-hint">Export API</div>
+          </div>
+        </a>
+        <a class="tile" href="/api/oauth/gmail/start?usuarioId=demo">
+          <span class="tile-icon" style="background:var(--brand-teal)">Go</span>
+          <div>
+            <div class="display home-label">OAuth</div>
+            <div class="home-hint">Gmail stub</div>
+          </div>
+        </a>
+      </section>
+      <section class="card home-card home-stack-sm">
+        <div class="home-card-head">
+          <h2 class="home-title">Integración API</h2>
+          <span class="home-badge">CI4 · ImapMailClient</span>
+        </div>
+        <ul class="home-list home-muted">
+          <li><code>GET /api/health</code> — estado del servicio</li>
+          <li><code>GET/POST /api/accounts</code> — casillas por <code>usuarioId</code></li>
+          <li><code>POST /api/accounts/:id/sync</code> — sync IMAP</li>
+          <li><code>GET /api/threads</code> — listar hilos</li>
+          <li><code>GET /api/threads/:id</code> — detalle</li>
+          <li><code>POST/GET /api/threads/:id/certificate</code> — PDF</li>
+          <li><code>GET /api/attachments/:id/export</code> — adjuntos</li>
+          <li><code>GET /api/oauth/gmail/start</code> — OAuth Gmail (env)</li>
+        </ul>
+        <p class="home-note">Contrato estable para CI4 en el README. Este servicio Node no modifica el repo PHP; Repositoria guarda en Documentos vía HTTP.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
